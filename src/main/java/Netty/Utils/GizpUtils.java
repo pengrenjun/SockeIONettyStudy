@@ -76,7 +76,7 @@ public class GizpUtils {
     /*将压缩的文件字节流进行解压并且存入到指定路径里面*/
     public static void loadFileByGZIPbytesAndFilePath(String filePath,byte[] gzipBytes) throws IOException {
 
-        byte[] bytes=GizpUtils.unGzipByBytes(gzipBytes);
+        byte[] bytes=unGzipByBytes(gzipBytes);
 
         FileOutputStream fileOutStream=new FileOutputStream(filePath);
 

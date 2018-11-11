@@ -7,7 +7,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Server {
-	//线程池
+	//线程池 a
 	private ExecutorService executorService;
 	//线程组
 	private AsynchronousChannelGroup threadGroup;

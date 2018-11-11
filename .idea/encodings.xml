@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/src/main/java/Netty/Server.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/java/Netty/heartBeat/Server.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/java/Netty/heartBeat/ServerHeartBeatHandler.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/java/Netty/heartBeat/TestSigar.java" charset="GBK" />
-  </component>
-</project>

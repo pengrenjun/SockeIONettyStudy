@@ -44,7 +44,7 @@ public class Customer {
         //需要通过textMessage.acknowledge();更新平台数据
         Session textSession=connection.createSession(false,CLIENT_ACKNOWLEDGE);
         //消费端需要session.commit才能更新MQ服务器端的显示数据
-        Session mapSession=connection.createSession(true,AUTO_ACKNOWLEDGE);
+        final Session mapSession=connection.createSession(true,AUTO_ACKNOWLEDGE);
 
         //4.通过Session创建 Destination 对象，用来指定生产消息目标和消费来源目标
         //  在点对点PTP中  Destination称为Queue 即队列  在Pub/Sub中 被称为主题Topic 可创建指定多个队列和主题
@@ -57,7 +57,41 @@ public class Customer {
         //5.通过Session对象创建消息的生产和消费者
 
         MessageConsumer messageConsumer=textSession.createConsumer(destination);
-        MessageConsumer messageConsumer1=mapSession.createConsumer(destination1);
+
+        //采用异步监听处理数据
+        System.out.println("TextMessageConsumer start process Date>>>>>>>>>>>>");
+        messageConsumer.setMessageListener(new MessageListener() {
+            @Override
+            public void onMessage(Message message) {
+                TextMessage textMessage= (TextMessage) message;
+                //异步获得数据，不阻塞主线程
+                try {
+                    TimeUnit.SECONDS.sleep(2);
+                    System.out.println("TextQueue异步加载数据:"+textMessage.getText());
+                    message.acknowledge();
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (JMSException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+        System.out.println("TextMessageConsumer  process Date ok!>>>>>>>>>>>>");
+
+        //消费者可以定义PTP消息的接收选择器,按照条件接收响应的数据
+        /*
+         public MessageConsumer createConsumer(Destination destination, String messageSelector) throws JMSException {
+         if (destination instanceof Topic) {
+            throw new InvalidDestinationException("Topics are not supported by a QueueSession");
+        }
+        return next.createConsumer(destination, messageSelector);
+    }*/
+        // 生产端需要指定Property mapMessage.setIntProperty("num",i) 只有类似于以下这种指定了数据类型的才是可以的;
+        String messageSelector="num>5";
+        MessageConsumer messageConsumer1=mapSession.createConsumer(destination1,messageSelector);
 
         //6.设置生产者的生产数据的持久化特性
 
@@ -68,27 +102,27 @@ public class Customer {
            while(true){
 
                List<MqModel> mqModels=JmxTest.testJmxActiveMq();
-               MqModel textQueueModel=null;
+               //MqModel textQueueModel=null;
                MqModel mapQueueModel=null;
                for(MqModel mqModel:mqModels){
 
-                   if(mqModel.getName().equals("TextQueue")){
+                  /* if(mqModel.getName().equals("TextQueue")){
                        textQueueModel=mqModel;
-                   }
+                   }*/
 
                    if(mqModel.getName().equals("MapQueue")){
                        mapQueueModel=mqModel;
                    }
                }
 
-               if(textQueueModel!=null && textQueueModel.getQueueSize()>0){
+              /* if(textQueueModel!=null && textQueueModel.getQueueSize()>0){
                    TextMessage textMessage= (TextMessage) messageConsumer.receive();
                    //手动确认签收 开启线程更新Mq平台的显示数据 这个方法是session层面的
                    textMessage.acknowledge();
 
                    System.out.println("TextQueue:"+textMessage.getText());
 
-               }
+               }*/
                if(mapQueueModel!=null && mapQueueModel.getQueueSize()>0){
                    MapMessage mapMessage= (MapMessage) messageConsumer1.receive();
                    System.out.println("MapQueue>>>>>>>>>>>>"+mapMessage.toString());
@@ -96,7 +130,7 @@ public class Customer {
                    mapSession.commit();
                }
 
-               if(textQueueModel.getQueueSize() ==0 && mapQueueModel.getQueueSize()==0){
+               if(/*textQueueModel.getQueueSize() ==0 &&*/ mapQueueModel.getQueueSize()==0){
                    break;
                }
 

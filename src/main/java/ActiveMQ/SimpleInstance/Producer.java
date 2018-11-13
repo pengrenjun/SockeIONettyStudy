@@ -1,6 +1,8 @@
 package ActiveMQ.SimpleInstance;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.ActiveMQMessageProducer;
+import org.apache.activemq.AsyncCallback;
 import org.apache.activemq.command.ActiveMQMapMessage;
 import org.apache.activemq.command.ActiveMQTextMessage;
 
@@ -63,7 +65,7 @@ public class Producer {
 
         MessageProducer messageProducer=textSession.createProducer(destination);
 
-        MessageProducer messageProducer1=mapSession.createProducer(destination1);
+        ActiveMQMessageProducer messageProducer1= (ActiveMQMessageProducer) mapSession.createProducer(null);
 
         //MessageConsumer messageConsumer=session.createConsumer(destination);
 
@@ -74,7 +76,7 @@ public class Producer {
          * @see javax.jms.Message#DEFAULT_DELIVERY_MODE*/
         messageProducer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 
-        messageProducer1.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
+        //messageProducer1.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 
         //7.创建数据 生产者发送数据 消费者接收数据 关闭connection 连接
 
@@ -85,9 +87,22 @@ public class Producer {
         }
 
         MapMessage mapMessage=new ActiveMQMapMessage();
-        for(int i=0;i<2;i++){
-            mapMessage.setString(String.valueOf(i),String.valueOf(System.currentTimeMillis()));
-            messageProducer1.send(mapMessage);
+        for(int i=0;i<10;i++){
+
+            mapMessage.setString(String.valueOf(i), String.valueOf(System.currentTimeMillis()));
+            mapMessage.setIntProperty("num",i);
+
+
+           // send(Destination destination, Message message, int deliveryMode, int priority, long timeToLive)
+            messageProducer1.send(destination1, mapMessage, DeliveryMode.NON_PERSISTENT, i, 1000 * 60 * 10, new AsyncCallback() {
+                @Override
+                public void onSuccess() {
+                    System.out.println("mapQueue send data ok! ");
+                }
+                @Override
+                public void onException(JMSException e) {
+            }
+            });
         }
 
 

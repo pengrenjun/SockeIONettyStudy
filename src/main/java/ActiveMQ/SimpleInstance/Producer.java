@@ -10,6 +10,7 @@ import javax.jms.*;
 import java.sql.Date;
 
 import static javax.jms.Session.AUTO_ACKNOWLEDGE;
+import static javax.jms.Session.CLIENT_ACKNOWLEDGE;
 
 /**
  * @Description: ActiveMq简单实例:生产者
@@ -39,25 +40,30 @@ public class Producer {
         connection.start();
 
         //3.通过建立的连接connection创建session会话(连接的上下文环境),用于接受消息,参数1：是否启用事务 参数2：设定签收模式 一般设为自动签收
-                /*AUTO_ACKNOWLEDGE
-                CLIENT_ACKNOWLEDGE
-                DUPS_OK_ACKNOWLEDGE*/
+                /* 签收模式:
+                AUTO_ACKNOWLEDGE   自动签收 客户端调用receive()方法就会自动向Mq服务器发送已经接收消息的信息 更新Mq服务器的数据
+                CLIENT_ACKNOWLEDGE 推荐:手动确认签收 需要在处理完数据之后 调用 textMessage.acknowledge();方法才会真正的更新MQ服务器的数据 并启动线程向MQ服务器发送已处理完毕的信息
+                DUPS_OK_ACKNOWLEDGE
+                */
 
-        Session session=connection.createSession(true,AUTO_ACKNOWLEDGE);
+        //使用事务的方式创建session 手动确认签收
+        Session textSession=connection.createSession(true,CLIENT_ACKNOWLEDGE);
+        //使用事务的方式创建session 需要使用session.commit()才能将数据发送 自动签收
+        Session mapSession=connection.createSession(true,AUTO_ACKNOWLEDGE);
 
         //4.通过Session创建 Destination 对象，用来指定生产消息目标和消费来源目标
         //  在点对点PTP中  Destination称为Queue 即队列  在Pub/Sub中 被称为主题Topic 可创建指定多个队列和主题
 
-        Destination destination=session.createQueue("TextQueue");
+        Destination destination=textSession.createQueue("TextQueue");
 
-        Destination destination1=session.createQueue("MapQueue");
+        Destination destination1=mapSession.createQueue("MapQueue");
 
 
         //5.通过Session对象创建消息的生产和消费者
 
-        MessageProducer messageProducer=session.createProducer(destination);
+        MessageProducer messageProducer=textSession.createProducer(destination);
 
-        MessageProducer messageProducer1=session.createProducer(destination1);
+        MessageProducer messageProducer1=mapSession.createProducer(destination1);
 
         //MessageConsumer messageConsumer=session.createConsumer(destination);
 
@@ -73,24 +79,24 @@ public class Producer {
         //7.创建数据 生产者发送数据 消费者接收数据 关闭connection 连接
 
         TextMessage textMessage=new ActiveMQTextMessage();
-        for(int i=0;i<10;i++){
+        for(int i=0;i<2;i++){
             textMessage.setText("Message>"+i+":"+String.valueOf(new Date(System.currentTimeMillis())));
             messageProducer.send(textMessage);
         }
 
         MapMessage mapMessage=new ActiveMQMapMessage();
-        for(int i=0;i<10;i++){
+        for(int i=0;i<2;i++){
             mapMessage.setString(String.valueOf(i),String.valueOf(System.currentTimeMillis()));
             messageProducer1.send(mapMessage);
         }
 
 
-        session.commit();
+        textSession.commit();
+        mapSession.commit();
 
         connection.close();
 
         System.out.println("Producers has sended Messages ok!");
-
 
     }
 

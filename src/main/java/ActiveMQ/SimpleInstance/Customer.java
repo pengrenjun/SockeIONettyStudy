@@ -137,7 +137,7 @@ public class Customer {
            }
 
         connection.close();
-        System.out.println("Customer has customed Messages ok!");
+        System.out.println("Subcribe has customed Messages ok!");
     }
 
     public static void main(String[] args) throws JMSException, InterruptedException, IOException, MalformedObjectNameException {

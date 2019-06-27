@@ -17,6 +17,12 @@
             <version>5.0.0.Alpha2</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-example</artifactId>
+            <version>4.1.25.Final</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.jboss.marshalling/jboss-marshalling -->
         <dependency>
             <groupId>org.jboss.marshalling</groupId>

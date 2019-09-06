@@ -15,6 +15,7 @@
  */
 package Netty.simpledemo.echo;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -27,6 +28,31 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
+        ByteBuf byteBuf=(ByteBuf) msg;
+
+        //检验Bytebuf是否有一个支撑数组 堆缓冲区
+        if(byteBuf.hasArray()){
+
+            byte[] array = byteBuf.array();
+
+            System.out.println("Unsupported heapBuf!");
+
+        }
+
+        //直接缓冲区模式
+        else {
+
+            //读取数据
+            int length=byteBuf.readableBytes();
+
+            byte[] byteArray=new byte[length];
+
+            byteBuf.readBytes(byteArray);
+
+            System.out.println(byteArray.toString());
+
+        }
+
         ctx.write(msg);
     }
 

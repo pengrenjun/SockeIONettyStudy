@@ -2,6 +2,7 @@ package NettyAction.TimeServerAndClient.demoserver;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -34,9 +35,14 @@ public class TimeServer {
                 .channel(NioServerSocketChannel.class)
                 .option(ChannelOption.SO_BACKLOG,100) //队列中可存入的客户端连接数
                 .childOption(ChannelOption.SO_REUSEADDR,true)//绑定的端口和地址可重复使用
-                .handler(new LoggingHandler(LogLevel.INFO))
-                .childHandler(new SeverChildChannelHandlers());
+                .handler(new LoggingHandler(LogLevel.INFO));
         serverPort=port;
+        return this;
+    }
+
+    //添加处理handles
+    public TimeServer addChildHandlers(ChannelHandlerAdapter...channelHandlerAdapters){
+        serverBootstrap.childHandler(new SeverChildChannelHandlers(channelHandlerAdapters));
         return this;
     }
 
@@ -56,7 +62,10 @@ public class TimeServer {
 
 
     public static void main(String[] args) {
-        new TimeServer().initServerAndBindPort(8002).start();
+        new TimeServer()
+                .initServerAndBindPort(8002)
+                .addChildHandlers(new TimeServerHandler())
+                .start();
     }
 
 

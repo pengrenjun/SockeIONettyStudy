@@ -1,6 +1,8 @@
 package NettyAction.TimeServerAndClient.democlient;
 
+import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
@@ -11,10 +13,19 @@ import io.netty.handler.logging.LoggingHandler;
  * @Created by Pengrenjun
  */
 public class ClientChildChannelHandlers extends ChannelInitializer<SocketChannel> {
+
+    //Ìí¼ÓpipelinedµÄhandlers
+    private ChannelHandlerAdapter[] ChannelHandlerAdapters=new ChannelHandlerAdapter[]{};
+
+    public ClientChildChannelHandlers(ChannelHandlerAdapter[] channelHandlerAdapters) {
+        this.ChannelHandlerAdapters=channelHandlerAdapters;
+    }
+
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
-        ch.pipeline()
-                .addLast(new LoggingHandler(LogLevel.INFO))
-                .addLast(new TimeClientHandler());
+        ChannelPipeline pipeline = ch.pipeline().addLast(new LoggingHandler(LogLevel.INFO));
+        for(ChannelHandlerAdapter handlerAdapter:ChannelHandlerAdapters){
+            pipeline.addLast(handlerAdapter);
+        }
     }
 }

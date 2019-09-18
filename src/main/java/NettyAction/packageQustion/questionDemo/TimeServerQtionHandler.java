@@ -1,4 +1,4 @@
-package NettyAction.TimeServerAndClient.packageQustion.questionDemo;
+package NettyAction.packageQustion.questionDemo;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;

@@ -1,4 +1,4 @@
-package NettyAction.TimeServerAndClient.packageQustion.questionDemo;
+package NettyAction.packageQustion.questionDemo;
 
 import NettyAction.TimeServerAndClient.democlient.TimeClient;
 import NettyAction.TimeServerAndClient.demoserver.TimeServer;

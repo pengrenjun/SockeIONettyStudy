@@ -55,6 +55,9 @@ public class TimeClient {
     }
 
     public static void main(String[] args) {
-        new TimeClient().connect("localhost",8002).addHandlers(new TimeClientHandler()).start();
+        new TimeClient()
+                .connect("localhost",8002)
+                .addHandlers(new TimeClientHandler())//°´ÐòÌí¼Óhandlers
+                .start();
     }
 }

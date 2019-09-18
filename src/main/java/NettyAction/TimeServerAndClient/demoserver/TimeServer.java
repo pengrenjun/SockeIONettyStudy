@@ -64,7 +64,7 @@ public class TimeServer {
     public static void main(String[] args) {
         new TimeServer()
                 .initServerAndBindPort(8002)
-                .addChildHandlers(new TimeServerHandler())
+                .addChildHandlers(new TimeServerHandler())//°´ĞòÌí¼Óhandlers
                 .start();
     }
 

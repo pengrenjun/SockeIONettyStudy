@@ -13,3 +13,7 @@ NettyAction目录结构：
    |---TimeServerHandler    时间服务器处理类
 
 |-packageQustion 拆包\粘包的问题及解决
+ |--questionDemo 半包问题不进行处理的演示
+   |---TestQtionPackage         测试类 客户端、服务端启动
+   |---TimeClientQtionHandler   为了演示半包问题的客户端处理器
+   |---TimeServerQtionHandler   为了演示半包问题的服务端处理器

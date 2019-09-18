@@ -2,8 +2,6 @@ package NettyAction.packageQustion.linebaseFramDecode;
 
 import NettyAction.TimeServerAndClient.democlient.TimeClient;
 import NettyAction.TimeServerAndClient.demoserver.TimeServer;
-import NettyAction.packageQustion.questionDemo.TimeClientQtionHandler;
-import NettyAction.packageQustion.questionDemo.TimeServerQtionHandler;
 import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 import org.junit.Test;

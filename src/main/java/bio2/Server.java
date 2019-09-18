@@ -15,7 +15,7 @@ public class Server {
 		PrintWriter out = null;
 		try {
 			server = new ServerSocket(PORT);
-			System.out.println("server start");
+			System.out.println("demoserver start");
 			Socket socket = null;
 			HandlerExecutorPool executorPool = new HandlerExecutorPool(50, 1000);
 			while(true){

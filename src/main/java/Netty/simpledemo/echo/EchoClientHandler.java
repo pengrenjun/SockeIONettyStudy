@@ -22,8 +22,8 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 
 /**
  * Handler implementation for the echo client.  It initiates the ping-pong
- * traffic between the echo client and server by sending the first message to
- * the server.
+ * traffic between the echo client and demoserver by sending the first message to
+ * the demoserver.
  */
 public class EchoClientHandler extends ChannelInboundHandlerAdapter {
 

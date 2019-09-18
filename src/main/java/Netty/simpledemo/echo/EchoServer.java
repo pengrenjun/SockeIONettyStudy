@@ -48,7 +48,7 @@ public final class EchoServer {
             sslCtx = null;
         }
 
-        // Configure the server.
+        // Configure the demoserver.
         //两个 EventLoopGroup：bossGroup 和 workerGroup，
         //它们涉及的是 Netty 的线程模型，可以看到服务端有两个 group，而客户端只有一个，它们就是 Netty 中的线程池
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
@@ -75,10 +75,10 @@ public final class EchoServer {
                  }
              });
 
-            // Start the server.
+            // Start the demoserver.
             ChannelFuture f = b.bind(PORT).sync();
 
-            // Wait until the server socket is closed.
+            // Wait until the demoserver socket is closed.
             f.channel().closeFuture().sync();
         } finally {
             // Shut down all event loops to terminate all threads.

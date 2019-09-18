@@ -1,4 +1,4 @@
-package NettyAction.TimeServerAndClient.server;
+package NettyAction.TimeServerAndClient.demoserver;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -32,9 +32,10 @@ public class TimeServer {
 
         serverBootstrap.group(bossGroup,workGroup)
                 .channel(NioServerSocketChannel.class)
-                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS,10000)
+                .option(ChannelOption.SO_BACKLOG,100) //队列中可存入的客户端连接数
+                .childOption(ChannelOption.SO_REUSEADDR,true)//绑定的端口和地址可重复使用
                 .handler(new LoggingHandler(LogLevel.INFO))
-                .childHandler(new ChildChannelHandlers());
+                .childHandler(new SeverChildChannelHandlers());
         serverPort=port;
         return this;
     }

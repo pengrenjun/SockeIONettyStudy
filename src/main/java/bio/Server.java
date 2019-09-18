@@ -14,7 +14,7 @@ public class Server {
 		ServerSocket server = null;
 		try {
 			server = new ServerSocket(PROT);
-			System.out.println(" server start .. ");
+			System.out.println(" demoserver start .. ");
 			//进行阻塞 等待通信消息
 			Socket socket = server.accept();
 			//新建一个线程执行客户端的任务

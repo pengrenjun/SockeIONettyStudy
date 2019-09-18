@@ -172,7 +172,7 @@ public final class HttpUploadClient {
         List<Entry<String, String>> entries = headers.entriesConverted();
         channel.writeAndFlush(request);
 
-        // Wait for the server to close the connection.
+        // Wait for the demoserver to close the connection.
         channel.closeFuture().sync();
 
         return entries;
@@ -236,7 +236,7 @@ public final class HttpUploadClient {
         // On standard program, it is clearly recommended to clean all files after each request
         // bodyRequestEncoder.cleanFiles();
 
-        // Wait for the server to close the connection.
+        // Wait for the demoserver to close the connection.
         channel.closeFuture().sync();
         return bodylist;
     }
@@ -283,7 +283,7 @@ public final class HttpUploadClient {
         // Now no more use of file representation (and list of HttpData)
         bodyRequestEncoder.cleanFiles();
 
-        // Wait for the server to close the connection.
+        // Wait for the demoserver to close the connection.
         channel.closeFuture().sync();
     }
 

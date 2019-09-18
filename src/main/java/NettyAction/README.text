@@ -17,3 +17,7 @@ NettyAction目录结构：
    |---TestQtionPackage         测试类 客户端、服务端启动
    |---TimeClientQtionHandler   为了演示半包问题的客户端处理器
    |---TimeServerQtionHandler   为了演示半包问题的服务端处理器
+ |--linebaseFramDecode 利用LineBaseFramDecoder+StringDecoder解决粘包、拆包的示例
+   |---TestLineBaseFramDecode         测试代码
+   |---TimeClientLineBfDecodeHandler  改造客户端的处理器
+   |---TimeServerLineBfDecodeHandler  改造服务端的处理器

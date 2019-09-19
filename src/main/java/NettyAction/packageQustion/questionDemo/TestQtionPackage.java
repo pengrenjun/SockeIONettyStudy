@@ -1,7 +1,7 @@
 package NettyAction.packageQustion.questionDemo;
 
-import NettyAction.TimeServerAndClient.democlient.TimeClient;
-import NettyAction.TimeServerAndClient.demoserver.TimeServer;
+import NettyAction.TimeServerAndClient.democlient.NettyClient;
+import NettyAction.TimeServerAndClient.demoserver.NettyServer;
 import org.junit.Test;
 
 /**
@@ -15,7 +15,7 @@ public class TestQtionPackage {
     @Test
     public void StartTimeServer(){
 
-        new TimeServer()
+        new NettyServer()
                 .initServerAndBindPort(8002)
                 .addChildHandlers(new TimeServerQtionHandler())
                 .start();
@@ -33,7 +33,7 @@ public class TestQtionPackage {
          * +--------+-------------------------------------------------+----------------+
          */
 
-        new TimeClient()
+        new NettyClient()
                 .connect("localhost",8002)
                 .addHandlers(new TimeClientQtionHandler())
                 .start();

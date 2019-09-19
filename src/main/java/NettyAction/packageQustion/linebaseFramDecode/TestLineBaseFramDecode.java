@@ -1,7 +1,7 @@
 package NettyAction.packageQustion.linebaseFramDecode;
 
-import NettyAction.TimeServerAndClient.democlient.TimeClient;
-import NettyAction.TimeServerAndClient.demoserver.TimeServer;
+import NettyAction.TimeServerAndClient.democlient.NettyClient;
+import NettyAction.TimeServerAndClient.demoserver.NettyServer;
 import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 import org.junit.Test;
@@ -15,7 +15,7 @@ public class TestLineBaseFramDecode {
     public void StartTimeServer(){
 
         //添加LineBasedFrameDecoder、StringDecoder两个解析器
-        new TimeServer()
+        new NettyServer()
                 .initServerAndBindPort(8002)
                 .addChildHandlers(new LineBasedFrameDecoder(1024),new StringDecoder(),
                         new TimeServerLineBfDecodeHandler())
@@ -122,7 +122,7 @@ public class TestLineBaseFramDecode {
     public void StartTimeClient(){
 
         //添加LineBasedFrameDecoder、StringDecoder两个解析器
-        new TimeClient()
+        new NettyClient()
                 .connect("localhost",8002)
                 .addHandlers(new LineBasedFrameDecoder(1024),new StringDecoder(),
                         new TimeClientLineBfDecodeHandler())

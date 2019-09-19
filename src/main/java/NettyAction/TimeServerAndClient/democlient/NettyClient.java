@@ -9,11 +9,11 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 /**
- * @Description 客户端
+ * @Description Netty客户端
  * @Date 2019/9/18 0018 下午 3:32
  * @Created by Pengrenjun
  */
-public class TimeClient {
+public class NettyClient {
 
     Bootstrap bootstrap=new Bootstrap();
 
@@ -25,7 +25,7 @@ public class TimeClient {
 
 
     //客户端连接引导初始化
-    public TimeClient connect(String host,int port ){
+    public NettyClient connect(String host, int port ){
 
         bootstrap.group(cliGroup).channel(NioSocketChannel.class)
                 .option(ChannelOption.TCP_NODELAY,Boolean.TRUE);
@@ -36,7 +36,7 @@ public class TimeClient {
     }
 
     //添加handlers处理器
-    public TimeClient addHandlers(ChannelHandlerAdapter...channelHandlerAdapters){
+    public NettyClient addHandlers(ChannelHandlerAdapter...channelHandlerAdapters){
         bootstrap.handler(new ClientChildChannelHandlers(channelHandlerAdapters));
         return this;
     }
@@ -55,7 +55,7 @@ public class TimeClient {
     }
 
     public static void main(String[] args) {
-        new TimeClient()
+        new NettyClient()
                 .connect("localhost",8002)
                 .addHandlers(new TimeClientHandler())//按序添加handlers
                 .start();

@@ -11,11 +11,11 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 
 /**
- * @Description Netty入门程序：时间服务器 -服务端
+ * @Description Netty入门程序：Netty服务端启动类
  * @Date 2019/9/18 0018 上午 11:17
  * @Created by Pengrenjun
  */
-public class TimeServer {
+public class NettyServer {
 
     private ServerBootstrap serverBootstrap=new ServerBootstrap();
 
@@ -29,7 +29,7 @@ public class TimeServer {
     private EventLoopGroup workGroup=new NioEventLoopGroup();
 
     //端口绑定
-    public TimeServer initServerAndBindPort(int port){
+    public NettyServer initServerAndBindPort(int port){
 
         serverBootstrap.group(bossGroup,workGroup)
                 .channel(NioServerSocketChannel.class)
@@ -41,7 +41,7 @@ public class TimeServer {
     }
 
     //添加处理handles
-    public TimeServer addChildHandlers(ChannelHandlerAdapter...channelHandlerAdapters){
+    public NettyServer addChildHandlers(ChannelHandlerAdapter...channelHandlerAdapters){
         serverBootstrap.childHandler(new SeverChildChannelHandlers(channelHandlerAdapters));
         return this;
     }
@@ -62,7 +62,7 @@ public class TimeServer {
 
 
     public static void main(String[] args) {
-        new TimeServer()
+        new NettyServer()
                 .initServerAndBindPort(8002)
                 .addChildHandlers(new TimeServerHandler())//按序添加handlers
                 .start();

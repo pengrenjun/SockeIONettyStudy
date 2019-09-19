@@ -25,3 +25,7 @@ NettyAction目录结构：
    |---DlimiterClientHandler   为了演示DelimiterBasedFrameDecoder半包问题的客户端处理器
    |---DlimiterServerHandler   为了演示DelimiterBasedFrameDecoder半包问题的服务端处理器
    |---TestDlimiterDecode      测试DelimiterBasedFrameDecoder类 客户端、服务端启动
+ |--fixlengthBaseDecode 使用FixedLengthFrameDecoder+ StringDecoder 解决粘包、拆包的示例
+   |---FixLenClientHandler   为了演示FixedLengthFrameDecoder半包问题的客户端处理器
+   |---FixLenServerHandler   为了演示FixedLengthFrameDecoder半包问题的服务端处理器
+   |---TestFixLenDecode      测试FixedLengthFrameDecoder类 客户端、服务端启动

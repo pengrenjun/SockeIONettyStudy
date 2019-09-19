@@ -40,7 +40,7 @@ public class NettyServer {
         return this;
     }
 
-    //添加处理handles
+    //添加处理handles 不同的特点的服务端加入不同的handlers
     public NettyServer addChildHandlers(ChannelHandlerAdapter...channelHandlerAdapters){
         serverBootstrap.childHandler(new SeverChildChannelHandlers(channelHandlerAdapters));
         return this;

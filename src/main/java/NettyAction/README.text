@@ -5,11 +5,11 @@ NettyAction目录结构：
 |-TimeServerAndClient 服务端入门程序演示demo
  |--democlinet 客户端测试demo包
    |---ClientChildChannelHandlers 自定义的数据读写处理链路类,继承ChannelInitializer
-   |---TimeClient                 netty客户端样本类
+   |---NettyClient                 netty客户端样本类
    |---TimeClientHandler          客户端发送指令(每个两秒向服务器发送一次指令)
  |--demoserver 服务端测试demo包
    |---ChildChannelHandlers 自定义的数据读写处理链路类,继承ChannelInitializer
-   |---TimeServer           netty服务端样本类
+   |---NettyServer           netty服务端样本类
    |---TimeServerHandler    时间服务器处理类
 
 |-packageQustion 拆包\粘包的问题及解决
@@ -21,3 +21,7 @@ NettyAction目录结构：
    |---TestLineBaseFramDecode         测试代码
    |---TimeClientLineBfDecodeHandler  改造客户端的处理器
    |---TimeServerLineBfDecodeHandler  改造服务端的处理器
+ |--delimiterBaseDecode 使用DelimiterBasedFrameDecoder+ StringDecoder 解决粘包、拆包的示例
+   |---DlimiterClientHandler   为了演示DelimiterBasedFrameDecoder半包问题的客户端处理器
+   |---DlimiterServerHandler   为了演示DelimiterBasedFrameDecoder半包问题的服务端处理器
+   |---TestDlimiterDecode      测试DelimiterBasedFrameDecoder类 客户端、服务端启动

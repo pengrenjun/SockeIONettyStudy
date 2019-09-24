@@ -29,3 +29,14 @@ NettyAction目录结构：
    |---FixLenClientHandler   为了演示FixedLengthFrameDecoder半包问题的客户端处理器
    |---FixLenServerHandler   为了演示FixedLengthFrameDecoder半包问题的服务端处理器
    |---TestFixLenDecode      测试FixedLengthFrameDecoder类 客户端、服务端启动
+
+|-DecodeAndEncode Netty各类编解码技术
+ |--JavaObjectCode 基于java对象序列化的开发(Netty的ObjectEncoder和ObjectDecoder \ CommonMsg implements Serializable)
+   |---RtuMeterClientHandler 设备端处理(登录、上报数据)
+   |---RtuMeterServerHandler 服务器端端处理(登录、采集指令发送)
+   |---TestJavaObjectCode    测试
+
+
+
+
+

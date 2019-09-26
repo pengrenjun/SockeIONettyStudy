@@ -1,8 +1,7 @@
 package NettyAction.DecodeAndEncode.JavaObjectCode;
 
-import NettyAction.DecodeAndEncode.CommonMsg;
-import NettyAction.DecodeAndEncode.LoginReq;
-import NettyAction.DecodeAndEncode.LoginResp;
+import NettyAction.DecodeAndEncode.*;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
@@ -13,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 设备登录后->主端(服务端) 下行发送采集指令
  */
+@ChannelHandler.Sharable
 public class RtuMeterServerHandler extends ChannelHandlerAdapter {
 
     Logger logger=LoggerFactory.getLogger(this.getClass());
@@ -50,6 +50,24 @@ public class RtuMeterServerHandler extends ChannelHandlerAdapter {
             loginResp.setResultMessage("设备集中器:"+loginReq.getRtuCode()+" 已连接服务器,可以进行通信");
             logger.info("主端响应集中器设备的登录请求：{}",loginResp.toString());
             ctx.writeAndFlush(loginResp);
+
+            //发送抄表数据报文
+            Thread.sleep(2000);
+            CollectMeterDataCmd collectMeterDataCmd=new CollectMeterDataCmd();
+            collectMeterDataCmd.setMsgType(CommonMsg.COLLECT_METERDATA_CMD_TYPE);
+            collectMeterDataCmd.setMessage(new byte[]{0x11,0x22,0x33,0x79,0x61});
+            collectMeterDataCmd.setRtuCode(loginReq.getRtuCode());
+            logger.info("主端对设备：{} 发送抄表数据报文 {}",loginReq.getRtuCode(),loginResp.toString());
+            ctx.writeAndFlush(collectMeterDataCmd);
+        }
+
+        //设备端响应抄表返回的数据
+        if(commonMsg.getMsgType().equals(CommonMsg.COLLECT_METERDATA_ACK_TYPE)){
+
+            CollectMeterDataAck meterDataAck=(CollectMeterDataAck)commonMsg;
+
+            logger.info("设备rtu:{} 返回的关联的水表读数信息：{}",meterDataAck.getRtuCode(),meterDataAck.toString());
+
         }
     }
 

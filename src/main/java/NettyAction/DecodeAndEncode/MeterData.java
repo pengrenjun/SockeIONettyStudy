@@ -9,7 +9,7 @@ import java.sql.Date;
 public class MeterData implements Serializable {
 
     //水表编号
-    private Integer meterCode;
+    private String meterCode;
 
     //水表读数
     private Double meterReading;
@@ -33,10 +33,19 @@ public class MeterData implements Serializable {
         this.timestamp = timestamp;
     }
 
+    public String getMeterCode() {
+        return meterCode;
+    }
+
+    public void setMeterCode(String meterCode) {
+        this.meterCode = meterCode;
+    }
+
     @Override
     public String toString() {
         return "MeterData{" +
-                "meterReading=" + meterReading +
+                "meterCode=" + meterCode +
+                ", meterReading=" + meterReading +
                 ", timestamp=" + timestamp +
                 '}';
     }

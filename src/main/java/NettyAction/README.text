@@ -35,6 +35,13 @@ NettyAction目录结构：
    |---RtuMeterClientHandler 设备端处理(登录、上报数据)
    |---RtuMeterServerHandler 服务器端端处理(登录、采集指令发送)
    |---TestJavaObjectCode    测试
+ |--jboosMarshelling 基于Marshelling实现序列化传输数据编解码
+   |---TestMarshellingCode 测试demo
+
+ |-http netty http服务端开发
+  |--fileServerDemo  文件服务器演示demo
+   |--HttpFileBootServer 文件服务器启动类
+   |--HttpFileServerHandler 文件服务器后端处理
 
 
 

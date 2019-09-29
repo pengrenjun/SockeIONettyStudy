@@ -1,6 +1,5 @@
-package NettyAction.DecodeAndEncode;
+package NettyAction.DecodeAndEncode.JavaObjectCode;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**

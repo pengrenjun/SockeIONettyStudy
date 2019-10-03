@@ -53,6 +53,9 @@ NettyAction目录结构：
   |-UdpClientHandler udp客户端处理程序
   |-UdpServer udp演示服务端
   |-UdpServerHandler udp服务端处理程序
+ |-filechannel 基于Netty实现文件的传输
+  |-FileServer 文件传输服务器
+  |-FileServerHandler 文件处理
 
 
 

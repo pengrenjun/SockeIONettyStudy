@@ -43,6 +43,12 @@ NettyAction目录结构：
    |--HttpFileBootServer 文件服务器启动类
    |--HttpFileServerHandler 文件服务器后端处理
 
+ |-websocket  netty websocket协议开发示例
+  |-WebSocketClinet.html   网页websocket客户端
+  |-WebSocketServer        服务端
+  |-WebSocketServerHandler websocket处理端
+
+
 
 
 

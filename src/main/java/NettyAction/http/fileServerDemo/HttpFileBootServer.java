@@ -10,6 +10,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpRequestDecoder;
 import io.netty.handler.codec.http.HttpResponseEncoder;
+import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 
 import java.net.InetAddress;
@@ -41,6 +42,7 @@ public class HttpFileBootServer {
                         @Override
                         protected void initChannel(SocketChannel ch)
                                 throws Exception {
+                            ch.pipeline().addLast(new LoggingHandler());
                             //添加请求消息解码器，对HTTP 请求消息解码
                             ch.pipeline().addLast("http-decoder",
                                     new HttpRequestDecoder());
